@@ -60,7 +60,7 @@ public class StickerBasketball extends TelegramLongPollingBot {
             case "/startGame" -> gameHandler.startGameCommandReceived(chatId);
             case "/play" -> gameHandler.playCommandReceived(chatId, update.getMessage().getFrom().getFirstName());
             case "/clear" -> gameHandler.clearCommandReceived(chatId);
-            default -> sendMessage(chatId, "Такой команды не существует");
+            default -> { }
         }
     }
 

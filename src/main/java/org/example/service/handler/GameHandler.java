@@ -67,7 +67,7 @@ public class GameHandler {
                 playersList.remove(index);
             }
             createTable(chatId);
-            bot.sendMessage(chatId, "Играют:\n " + playersTable.get(indexOfCurrentPlayer).getTelegramUserName() + " vs " + playersTable.get(indexOfCurrentPlayer+1));
+            bot.sendMessage(chatId, "Играют:\n " + playersTable.get(indexOfCurrentPlayer).getTelegramUserName() + " vs " + playersTable.get(indexOfCurrentPlayer+1).getTelegramUserName());
             playersSet.clear();
             playersList.clear();
         } else {
