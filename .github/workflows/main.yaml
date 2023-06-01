@@ -21,7 +21,6 @@ jobs:
           arguments: build
   prepare-environment:
     runs-on: self-hosted
-    needs: test
     steps:
       - name: Stop and remove containers, networks
         run: docker-compose down
