@@ -1,10 +1,14 @@
 name: StickerBasketball
 
-on: [push]
+on:
+  push:
+    branches: [ "master" ]
+
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -19,3 +23,7 @@ jobs:
         uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
         with:
           arguments: build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Package
+          path: build/libs
