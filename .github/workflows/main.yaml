@@ -39,7 +39,10 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Build with Gradle
-        run: gradle build -x test
+        run: gradle build -x
+
+      - name: Create artifact archive
+        run: zip -r artifact.zip target/recipes-api-0.0.1-SNAPSHOT.jar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
