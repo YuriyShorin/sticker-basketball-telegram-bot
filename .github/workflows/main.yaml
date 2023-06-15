@@ -42,7 +42,10 @@ jobs:
         run: gradle build -x test
 
       - name: Artifact archive
-        run: zip -r artifact.zip build/libs/StickerBasketball-0.0.1-SNAPSHOT.jar
+        run: |
+          sudo apt-get update
+          sudo apt-get install zip
+          zip -r artifact.zip build/libs/StickerBasketball-0.0.1-SNAPSHOT.jar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -64,8 +67,8 @@ jobs:
         with:
           to: ${{ secrets.TG_ID}}
           token: ${{ secrets.SENDING_BOT_TOKEN}}
-          message: uploaded artifacts
           document: StickerBasketball
+          message: uploaded artifacts
 
   deploy:
     needs: build
