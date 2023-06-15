@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: StickerBasketball
-          path: build/libs
+          path: artifact.zip
 
 
   send_telegram_massage:
@@ -53,9 +53,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: ls
-        run: ls -la
+      - uses: actions/download-artifact@v3
+        with:
+          name: StickerBasketball
 
       - name: Send Telegram message
         uses: appleboy/telegram-action@master
@@ -63,7 +63,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO}}
           token: ${{ secrets.TELEGRAM_TOKEN}}
           message: uploaded artifacts
-          document: StickerBasketball.zip
+          document: StickerBasketball
 
 
   deploy:
