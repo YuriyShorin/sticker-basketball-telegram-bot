@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: StickerBasketball
-          path: build/libs
+          path: artifacts/*
 
 
   send_telegram_massage:
@@ -57,10 +57,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: StickerBasketball
+          path: artifacts/*
 
       - name: Archive
         run: | 
-          7z a  StickerBasketball.7z StickerBasketball
+          7z a StickerBasketball.7z StickerBasketball
 
       - name: ls
         run: ls -la
