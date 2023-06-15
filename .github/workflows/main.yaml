@@ -53,14 +53,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: StickerBasketball
-
-      - name: Archive
-        run: | 
-          7z a StickerBasketball.7z StickerBasketball
 
       - name: ls
         run: ls -la
@@ -71,7 +63,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO}}
           token: ${{ secrets.TELEGRAM_TOKEN}}
           message: uploaded artifacts
-          document: StickerBasketball.7z
+          document: StickerBasketball.zip
 
 
   deploy:
