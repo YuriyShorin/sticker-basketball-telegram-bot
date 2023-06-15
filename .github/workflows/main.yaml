@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: StickerBasketball
-          path: build/libs/StickerBasketball-0.0.1-SNAPSHOT.jar
+          path: build/libs/
 
   send_telegram_massage:
     needs: build
