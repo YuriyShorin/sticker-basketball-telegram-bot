@@ -41,15 +41,14 @@ jobs:
       - name: Build with Gradle
         run: gradle build -x test
 
-      - name: Create artifact archive
-        run: zip -r artifact.zip StickerBasketball/StickerBasketball-0.0.1-SNAPSHOT.jar
+      - name: Artifact archive
+        run: zip -r artifact.zip StickerBasketball-0.0.1-SNAPSHOT.jar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: StickerBasketball
           path: artifact.zip
-
 
   send_telegram_massage:
     needs: build
@@ -67,7 +66,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN}}
           message: uploaded artifacts
           document: StickerBasketball
-
 
   deploy:
     needs: build
