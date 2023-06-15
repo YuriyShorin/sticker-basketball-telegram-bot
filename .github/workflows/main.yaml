@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: StickerBasketball
-          path: artifact.zip
+          path: build/libs/artifact.zip
 
   send_telegram_massage:
     needs: build
