@@ -62,10 +62,10 @@ jobs:
       - name: Send Telegram message
         uses: appleboy/telegram-action@master
         with:
-          to: ${{ secrets.TELEGRAM_TO}}
-          token: ${{ secrets.TELEGRAM_TOKEN}}
+          to: ${{ secrets.TG_ID}}
+          token: ${{ secrets.SENDING_BOT_TOKEN}}
           message: uploaded artifacts
-#          document: StickerBasketball
+          document: StickerBasketball
 
   deploy:
     needs: build
