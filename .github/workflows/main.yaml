@@ -65,7 +65,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO}}
           token: ${{ secrets.TELEGRAM_TOKEN}}
           message: uploaded artifacts
-          document: StickerBasketball
+#          document: StickerBasketball
 
   deploy:
     needs: build
