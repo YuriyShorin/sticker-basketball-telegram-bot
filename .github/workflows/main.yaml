@@ -42,7 +42,7 @@ jobs:
         run: gradle build -x test
 
       - name: Create artifact archive
-        run: zip -r artifact.zip target/recipes-api-0.0.1-SNAPSHOT.jar
+        run: zip -r artifact.zip target/StickerBasketball-0.0.1-SNAPSHOT.jar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
