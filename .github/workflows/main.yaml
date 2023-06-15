@@ -67,7 +67,7 @@ jobs:
           document: StickerBasketball
           message: |
             Artifact uploaded
-            Repository: ${{ github.repository }}
+          
 
   deploy:
     needs: build
@@ -95,10 +95,9 @@ jobs:
 
       - name: Deploy to Self-Hosted Agent
         run: |
-          docker stop sticker-basketball-container
-          docker rm sticker-basketball-container
+          docker stop sticker-basketball || true && docker rm sticker-basketball || true
           docker pull ${{ secrets.DOCKER_USERNAME }}/bot:latest
-          docker run -d --name sticker-basketball-container \
+          docker run -d --name sticker-basketball \
           -e "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" \
           -e "BOT_NAME=${{ secrets.BOT_NAME }}" \
           ${{ secrets.DOCKER_USERNAME }}/bot:latest
