@@ -56,11 +56,11 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: exe
+          name: StickerBasketball
 
       - name: Archive
         run: | 
-          7z a main.7z main.exe
+          7z a  StickerBasketball.7z StickerBasketball.exe
 
       - name: ls
         run: ls -la
