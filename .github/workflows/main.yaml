@@ -2,7 +2,7 @@ name: StickerBasketball
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
   workflow_dispatch:
 

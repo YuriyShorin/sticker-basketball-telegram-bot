@@ -31,7 +31,7 @@ public class StickerBasketball extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return config.getToken();
+        return config.getBotToken();
     }
 
     @Override

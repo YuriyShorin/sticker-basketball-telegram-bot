@@ -19,5 +19,4 @@ public class StickerBasketballConfig {
     GameHandler gameHandler() {
         return new GameHandler();
     }
-
 }
