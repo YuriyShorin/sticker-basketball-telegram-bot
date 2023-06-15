@@ -39,13 +39,13 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Build with Gradle
-        run: gradle build -x
+        run: gradle build -x test
 
       - name: Create artifact archive
         run: zip -r artifact.zip target/recipes-api-0.0.1-SNAPSHOT.jar
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: StickerBasketball
           path: artifact.zip
