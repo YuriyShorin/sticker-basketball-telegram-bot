@@ -38,20 +38,20 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Build with Gradle
+      - name: Build Gradle
         run: gradle build -x test
 
       - name: Artifact archive
         run: zip -r artifact.zip build/libs/StickerBasketball-0.0.1-SNAPSHOT.jar
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
           name: StickerBasketball
           path: artifact.zip
 
-  send_telegram_massage:
-    name: send telegram message
+  send_telegram_message:
+    name: Send telegram message
     needs: build
     runs-on: ubuntu-latest
 
@@ -59,14 +59,15 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: StickerBasketball
-
-      - name: Send Telegram message
+      - name: Send message
         uses: appleboy/telegram-action@master
         with:
-          to: ${{ secrets.TG_ID}}
-          token: ${{ secrets.SENDING_BOT_TOKEN}}
+          to: ${{ secrets.TG_ID }}
+          token: ${{ secrets.SENDING_BOT_TOKEN }}
           document: StickerBasketball
-          message: uploaded artifacts
+          message: |
+            Artifact uploaded
+            Repository: ${{ github.repository }}
 
   deploy:
     needs: build
@@ -94,8 +95,8 @@ jobs:
 
       - name: Deploy to Self-Hosted Agent
         run: |
-          docker stop sticker-basketball-container || true
-          docker rm sticker-basketball-container || true
+          docker stop sticker-basketball-container
+          docker rm sticker-basketball-container
           docker pull ${{ secrets.DOCKER_USERNAME }}/bot:latest
           docker run -d --name sticker-basketball-container \
           -e "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" \
