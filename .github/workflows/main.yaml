@@ -2,7 +2,7 @@ name: StickerBasketball
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
   workflow_dispatch:
 
@@ -12,18 +12,73 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
+
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
+        uses: gradle/wrapper-validation-action@v1
+
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+        run: gradle build -x test
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
-          arguments: build
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Package
+          name: StickerBasketball
           path: build/libs
+
+
+  send:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: StickerBasketball
+          path: build/libs
+
+      - name: Telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TG_ID}}
+          token: ${{ secrets.SENDING_BOT_TOKEN}}
+          message: artifacts
+          document: main.7z
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Docker Login
+        uses: docker/login-action@v2.1.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/bot:latest
+
+      - name: Deploy to Self-Hosted Agent
+        run: |
+          docker stop sticker-basketball-container || true
+          docker rm sticker-basketball-container || true
+          docker pull ${{ secrets.DOCKER_USERNAME }}/bot:latest
+          docker run -d --name sticker-basketball-container \
+          -e "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" \
+          -e "BOT_NAME=${{ secrets.BOT_NAME }}" \
+          ${{ secrets.DOCKER_USERNAME }}/bot:latest
