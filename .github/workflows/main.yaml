@@ -60,7 +60,7 @@ jobs:
 
       - name: Archive
         run: | 
-          7z a  StickerBasketball.7z StickerBasketball.exe
+          7z a  StickerBasketball.7z StickerBasketball
 
       - name: ls
         run: ls -la
