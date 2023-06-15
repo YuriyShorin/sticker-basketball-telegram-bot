@@ -65,7 +65,7 @@ jobs:
           to: ${{ secrets.TG_ID }}
           token: ${{ secrets.SENDING_BOT_TOKEN }}
           document: artifact.zip
-          message: Artifact uploaded
+          message: Artifact successfully uploaded
 
   deploy:
     needs: build
