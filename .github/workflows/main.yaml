@@ -93,9 +93,10 @@ jobs:
 
       - name: Deploy to Self-Hosted Agent
         run: |
-          docker stop $(docker ps -aq) && docker rm sticker-basketball
+          docker stop sticker_basketball || true
+          docker rm sticker_basketball || true
           docker pull ${{ secrets.DOCKER_USERNAME }}/bot:latest
-          docker run -d --name sticker-basketball \
+          docker run -d --name sticker_basketball \
           -e "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" \
           -e "BOT_NAME=${{ secrets.BOT_NAME }}" \
           ${{ secrets.DOCKER_USERNAME }}/bot:latest
