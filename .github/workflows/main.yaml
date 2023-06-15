@@ -32,22 +32,31 @@ jobs:
           path: build/libs
 
 
-  send:
+  send_telegram_massage:
     needs: build
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: StickerBasketball
-          path: build/libs
 
-      - name: Telegram message
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: exe
+
+      - name: Archive
+        run: |
+          7z a StickerBasketball.7z StickerBasketball
+
+      - name: ls
+        run: ls -la
+
+      - name: Send Telegram message
         uses: appleboy/telegram-action@master
         with:
-          to: ${{ secrets.TG_ID}}
-          token: ${{ secrets.SENDING_BOT_TOKEN}}
-          message: artifacts
+          to: ${{ secrets.TELEGRAM_TO}}
+          token: ${{ secrets.TELEGRAM_TOKEN}}
+          message: uploaded artifacts
           document: main.7z
+
 
   deploy:
     needs: build
