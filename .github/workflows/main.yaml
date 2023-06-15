@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: StickerBasketball
-          path: artifacts/*
+          path: build/libs
 
 
   send_telegram_massage:
@@ -57,7 +57,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: StickerBasketball
-          path: artifacts/*
 
       - name: Archive
         run: | 
@@ -72,7 +71,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO}}
           token: ${{ secrets.TELEGRAM_TOKEN}}
           message: uploaded artifacts
-          document: main.7z
+          document: StickerBasketball.7z
 
 
   deploy:
