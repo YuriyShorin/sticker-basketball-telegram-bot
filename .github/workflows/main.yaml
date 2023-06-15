@@ -42,7 +42,7 @@ jobs:
         run: gradle build -x test
 
       - name: Artifact archive
-        run: zip -r artifact.zip StickerBasketball-0.0.1-SNAPSHOT.jar
+        run: zip -r artifact.zip build/libs/StickerBasketball-0.0.1-SNAPSHOT.jar
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
