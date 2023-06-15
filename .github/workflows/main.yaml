@@ -41,11 +41,14 @@ jobs:
       - name: Build Gradle
         run: gradle build -x test
 
+      - name: Artifact archive
+        run: zip -r artifact.zip build/libs/StickerBasketball-0.0.1-SNAPSHOT.jar
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: StickerBasketball
-          path: build/libs/
+          path: artifact.zip
 
   send_telegram_message:
     name: Send telegram message
@@ -53,12 +56,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: StickerBasketball
       - name: Send message
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TG_ID }}
           token: ${{ secrets.SENDING_BOT_TOKEN }}
-          document: build/libs/StickerBasketball-0.0.1-SNAPSHOT.jar
+          document: artifact.zip
           message: Artifact uploaded
 
   deploy:
